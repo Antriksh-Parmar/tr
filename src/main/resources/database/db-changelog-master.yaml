@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: "001-db-setup"
+      author: "Antriksh"
+      changes:
+        - sqlFile:
+            path: "001-db-setup.sql"
+            relativeToChangelogFile: true
