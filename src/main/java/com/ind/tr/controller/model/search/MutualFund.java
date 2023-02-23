@@ -1,19 +1,19 @@
-package com.ind.tr.controller.model;
+package com.ind.tr.controller.model.search;
 
 public class MutualFund {
-    int id;
+    String id;
     String name;
 
-    public MutualFund(int id, String name) {
+    public MutualFund(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package com.ind.tr.controller.model;
+package com.ind.tr.controller.model.search;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

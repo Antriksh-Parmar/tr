@@ -1,7 +1,7 @@
 package com.ind.tr.config;
 
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.Http2SolrClient;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class SolrConfig {
 
     @Bean
     public SolrClient solrClient() {
-        return new Http2SolrClient.Builder(url).build();
+        return new HttpSolrClient.Builder(url).build();
     }
 
 }

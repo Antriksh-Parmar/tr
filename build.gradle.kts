@@ -14,10 +14,17 @@ repositories {
 
 dependencies {
     implementation("org.apache.solr:solr-solrj:9.1.1")
+
     implementation("org.mongodb:mongodb-driver-sync:4.8.1")
     implementation("org.springframework.data:spring-data-mongodb:4.0.2")
+
+    implementation("org.postgresql:postgresql:42.2.15")
+    implementation("org.liquibase:liquibase-core:4.19.0")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
     implementation("org.json:json:20220924")
     implementation("com.fasterxml.jackson.core:jackson-core:2.14.2")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

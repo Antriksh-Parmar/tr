@@ -1,11 +1,13 @@
-package com.ind.tr.controller.model;
+package com.ind.tr.controller.model.search;
+
+import com.ind.tr.controller.model.BaseResponse;
 
 import java.util.List;
 
-public class SearchRecommendationResponse extends BaseResponse {
+public class SearchResponse extends BaseResponse {
     List<MutualFund> mutualFunds;
 
-    public SearchRecommendationResponse(Status status, List<MutualFund> mutualFunds) {
+    public SearchResponse(Status status, List<MutualFund> mutualFunds) {
         super(status);
         this.mutualFunds = mutualFunds;
     }

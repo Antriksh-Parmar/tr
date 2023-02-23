@@ -2,10 +2,16 @@ package com.ind.tr.config;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DBConfig {
@@ -20,7 +26,7 @@ public class DBConfig {
         return new MongoTemplate(mongoClient, "mf_analytics");
     }
 
- /*   @Value("${datasource.url}")
+    @Value("${datasource.url}")
     private String dbUrl;
     @Value("${datasource.username}")
     private String username;
@@ -50,8 +56,7 @@ public class DBConfig {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(dataSource);
         springLiquibase.setChangeLog("database/db-changelog-master.yaml");
-        springLiquibase.setShouldRun(false);
         return springLiquibase;
-    }*/
+    }
 
 }

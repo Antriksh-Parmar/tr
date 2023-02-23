@@ -1,5 +1,6 @@
 package com.ind.tr.controller;
 
+import com.ind.tr.service.SolrService;
 import com.ind.tr.service.refresh.MFCoreDataSaveService;
 import com.ind.tr.service.refresh.MFHistoricalNavRefreshService;
 import com.ind.tr.service.refresh.SbDataScanService;
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController(value = "/refresh")
 public class RefreshDataController {
 
     @Autowired
@@ -19,19 +20,27 @@ public class RefreshDataController {
     @Autowired
     private SbDataScanService sbDataScanService;
 
-    @GetMapping("/pull-mf-core-data")
+    @Autowired
+    private SolrService solrService;
+
+    @GetMapping("/mf-scriptbox-data")
     public void pullMfCoreData() {
         sbDataScanService.exploreAPI();
     }
 
-    @GetMapping("/update-mf-core-data")
+    @GetMapping("/mf-mongo-data")
     public void refreshCore() {
         mFCoreDataSaveService.refresh();
     }
 
-    @GetMapping("/update-mf-historical-navs")
+    @GetMapping("/historical-navs")
     public void refreshHistoricalNavs() {
         mfHistoricalNavRefreshService.refresh();
+    }
+
+    @GetMapping("/solr-indexes")
+    public void refreshSolrIndexes() {
+        solrService.refreshSolrIndexes();
     }
 
 }
