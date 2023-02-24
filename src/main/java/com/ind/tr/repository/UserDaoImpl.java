@@ -1,11 +1,9 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.UserReadEntity;
-import com.ind.tr.persistance.model.UserWriteEntity;
+import com.ind.tr.repository.model.UserReadEntity;
+import com.ind.tr.repository.model.UserWriteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

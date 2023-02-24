@@ -1,8 +1,7 @@
 package com.ind.tr.service.translator;
 
-import com.ind.tr.controller.model.UserResponse;
-import com.ind.tr.persistance.model.UserReadEntity;
-import com.ind.tr.persistance.model.UserWriteEntity;
+import com.ind.tr.repository.model.UserReadEntity;
+import com.ind.tr.repository.model.UserWriteEntity;
 import com.ind.tr.service.model.User;
 import com.ind.tr.service.model.GuestUser;
 import com.ind.tr.service.model.PlatformUser;
@@ -12,11 +11,6 @@ import java.util.Optional;
 
 @Component
 public class UserTranslatorImpl implements UserTranslator {
-
-    @Override
-    public UserResponse toGuestUserResponse(GuestUser guestUser) {
-        return new UserResponse(guestUser.getId());
-    }
 
     @Override
     public UserWriteEntity toUserWriteEntity(GuestUser guestUser) {

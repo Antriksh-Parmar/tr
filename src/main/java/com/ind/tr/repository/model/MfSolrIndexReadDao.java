@@ -1,4 +1,4 @@
-package com.ind.tr.persistance.model;
+package com.ind.tr.repository.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,4 +1,4 @@
-package com.ind.tr.persistance.model.utill;
+package com.ind.tr.repository.model.utill;
 
 import java.util.List;
 

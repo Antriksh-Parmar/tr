@@ -1,6 +1,6 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.MfSolrIndexReadDao;
+import com.ind.tr.repository.model.MfSolrIndexReadDao;
 
 import java.util.List;
 

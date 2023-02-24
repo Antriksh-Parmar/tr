@@ -1,16 +1,16 @@
-package com.ind.tr.persistance.model;
+package com.ind.tr.repository.model;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class UserWriteEntity {
+public class UserReadEntity {
     private UUID id;
     private Optional<String> firstName;
     private Optional<String> lastName;
     private Optional<String> email;
     private Optional<String> passwordHash;
 
-    public UserWriteEntity(UUID id, Optional<String> firstName, Optional<String> lastName, Optional<String> email, Optional<String> passwordHash) {
+    public UserReadEntity(UUID id, Optional<String> firstName, Optional<String> lastName, Optional<String> email, Optional<String> passwordHash) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,6 +48,10 @@ public class UserWriteEntity {
 
     public void setEmail(Optional<String> email) {
         this.email = email;
+    }
+
+    public boolean isGuestUser() {
+        return (id != null && firstName.isEmpty() && lastName.isEmpty() && email.isEmpty());
     }
 
     public Optional<String> getPasswordHash() {

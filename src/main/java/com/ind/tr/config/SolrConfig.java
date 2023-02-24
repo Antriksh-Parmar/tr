@@ -12,7 +12,6 @@ public class SolrConfig {
     @Value("${solr.url}")
     private String url;
 
-
     @Bean
     public SolrClient solrClient() {
         return new HttpSolrClient.Builder(url).build();

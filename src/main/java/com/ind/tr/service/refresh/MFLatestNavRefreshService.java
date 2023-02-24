@@ -1,6 +1,6 @@
 package com.ind.tr.service.refresh;
 
-import com.ind.tr.persistance.model.utill.Nav;
+import com.ind.tr.repository.model.utill.Nav;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;

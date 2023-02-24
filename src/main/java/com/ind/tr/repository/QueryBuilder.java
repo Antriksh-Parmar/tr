@@ -1,4 +1,4 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

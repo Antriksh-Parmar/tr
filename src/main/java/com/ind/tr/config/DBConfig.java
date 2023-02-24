@@ -16,24 +16,37 @@ import javax.sql.DataSource;
 @Configuration
 public class DBConfig {
 
+
+    @Value("${liquibase.changelog}")
+    private String liquibaseChangeLog;
+
+    @Value("${postgres.url}")
+    private String dbUrl;
+
+    @Value("${postgres.username}")
+    private String username;
+
+    @Value("${postgres.password}")
+    private String password;
+
+    @Value("${postgres.driver-class-name}")
+    private String driverClass;
+
+    @Value("${mongo.url}")
+    private String mongoUrl;
+
+    @Value("${mongo.db}")
+    private String mongoDb;
+
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://localhost:27017");
+        return MongoClients.create(mongoUrl);
     }
 
     @Bean
     public MongoTemplate mongoTemplate(@Autowired MongoClient mongoClient) {
-        return new MongoTemplate(mongoClient, "mf_analytics");
+        return new MongoTemplate(mongoClient, mongoDb);
     }
-
-    @Value("${datasource.url}")
-    private String dbUrl;
-    @Value("${datasource.username}")
-    private String username;
-    @Value("${datasource.password}")
-    private String password;
-    @Value("${datasource.driver-class-name}")
-    private String driverClass;
 
     @Bean
     public DataSource dataSource() {
@@ -55,7 +68,7 @@ public class DBConfig {
     public SpringLiquibase springLiquibase(@Autowired DataSource dataSource) {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(dataSource);
-        springLiquibase.setChangeLog("database/db-changelog-master.yaml");
+        springLiquibase.setChangeLog(liquibaseChangeLog);
         return springLiquibase;
     }
 

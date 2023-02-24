@@ -13,6 +13,13 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-security:3.0.3")
+    implementation("org.springframework.security:spring-security-jwt:1.1.0")
+    implementation("com.nimbusds:nimbus-jose-jwt:9.31")
+
+    implementation("org.slf4j:slf4j-api:2.0.6")
+    testImplementation("org.slf4j:slf4j-log4j12:2.0.6")
+
     implementation("org.apache.solr:solr-solrj:9.1.1")
 
     implementation("org.mongodb:mongodb-driver-sync:4.8.1")

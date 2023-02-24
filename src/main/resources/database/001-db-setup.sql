@@ -13,7 +13,7 @@ CREATE TABLE pf.users(
 CREATE TABLE pf.portfolios(
     id VARCHAR(200) PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
-    owner_id VARCHAR(200) NOT NULL REFERENCES pf.users(id),
+    user_id VARCHAR(200) NOT NULL REFERENCES pf.users(id),
     created_date DATE NOT NULL,
     updated_date DATE NOT NULL
 );

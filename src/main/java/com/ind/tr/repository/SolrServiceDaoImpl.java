@@ -1,6 +1,6 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.MfSolrIndexReadDao;
+import com.ind.tr.repository.model.MfSolrIndexReadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;

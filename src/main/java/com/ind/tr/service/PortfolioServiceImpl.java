@@ -1,8 +1,8 @@
 package com.ind.tr.service;
 
 import com.ind.tr.controller.model.PortfolioResponse;
-import com.ind.tr.persistance.PortfolioDao;
-import com.ind.tr.persistance.UserDao;
+import com.ind.tr.repository.PortfolioDao;
+import com.ind.tr.repository.UserDao;
 import com.ind.tr.service.model.PlatformUser;
 import com.ind.tr.service.model.Portfolio;
 import com.ind.tr.service.model.User;
@@ -38,7 +38,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     private Portfolio generatePortfolioDetails(User user) {
-        LocalDate today = istClock.getTodayDate();
+        LocalDate today = istClock.getTodayLocalDate();
         return new Portfolio(
                 UUID.randomUUID(),
                 createPortfolioName(user),
@@ -50,9 +50,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     private String createPortfolioName(User user) {
         if (user instanceof PlatformUser platformUser) {
-            return platformUser.getFirstName() + "'s portfolio: " + istClock.getTodayDate().toString();
+            return platformUser.getFirstName() + "'s portfolio: " + istClock.getTodayLocalDate().toString();
         } else {
-            return "My portfolio: " + istClock.getTodayDate().toString();
+            return "My portfolio: " + istClock.getTodayLocalDate().toString();
         }
     }
 }

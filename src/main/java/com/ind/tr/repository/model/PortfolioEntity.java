@@ -1,4 +1,4 @@
-package com.ind.tr.persistance.model;
+package com.ind.tr.repository.model;
 
 import java.time.LocalDate;
 import java.util.UUID;

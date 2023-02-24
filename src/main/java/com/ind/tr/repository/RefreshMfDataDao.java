@@ -1,7 +1,7 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.utill.NavQuery;
-import com.ind.tr.persistance.model.utill.NavStoreDataObject;
+import com.ind.tr.repository.model.utill.NavQuery;
+import com.ind.tr.repository.model.utill.NavStoreDataObject;
 import com.mongodb.BasicDBObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

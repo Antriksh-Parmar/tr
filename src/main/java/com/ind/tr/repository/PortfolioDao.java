@@ -1,6 +1,6 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.PortfolioEntity;
+import com.ind.tr.repository.model.PortfolioEntity;
 
 public interface PortfolioDao {
     void savePortfolio(PortfolioEntity portfolioEntity);

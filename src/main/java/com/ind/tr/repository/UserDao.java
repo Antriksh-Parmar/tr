@@ -1,7 +1,7 @@
-package com.ind.tr.persistance;
+package com.ind.tr.repository;
 
-import com.ind.tr.persistance.model.UserReadEntity;
-import com.ind.tr.persistance.model.UserWriteEntity;
+import com.ind.tr.repository.model.UserReadEntity;
+import com.ind.tr.repository.model.UserWriteEntity;
 
 import java.util.UUID;
 
