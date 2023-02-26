@@ -32,4 +32,8 @@ public class PlatformUser extends User {
         return passwordHash;
     }
 
+    @Override
+    public boolean isGuestUser() {
+        return false;
+    }
 }

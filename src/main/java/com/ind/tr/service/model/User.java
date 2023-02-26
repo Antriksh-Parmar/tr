@@ -12,4 +12,7 @@ public abstract class User {
     public UUID getId() {
         return id;
     }
+
+    public abstract boolean isGuestUser();
+
 }

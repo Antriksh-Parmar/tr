@@ -32,7 +32,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public UserReadEntity getUser(UUID uuid) {
-        String query = QueryBuilder.builder().setQueryType(QueryType.SELECT).setSchema("pf").setTableName("users").setParameters("*").build();
+        String query = QueryBuilder.builder()
+                .setQueryType(QueryType.SELECT)
+                .setSchema("pf")
+                .setTableName("users")
+                .setParameters("*")
+                .setConditions("id = '" + uuid.toString() + "'").build();
         return jdbcTemplate.queryForObject(query, new RowMapper<UserReadEntity>() {
             @Override
             public UserReadEntity mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security:3.0.3")
-    implementation("org.springframework.security:spring-security-jwt:1.1.0")
+    implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
     implementation("com.nimbusds:nimbus-jose-jwt:9.31")
 
     implementation("org.slf4j:slf4j-api:2.0.6")

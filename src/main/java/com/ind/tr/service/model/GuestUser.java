@@ -8,4 +8,9 @@ public class GuestUser extends User {
         super(id);
     }
 
+    @Override
+    public boolean isGuestUser() {
+        return true;
+    }
+
 }

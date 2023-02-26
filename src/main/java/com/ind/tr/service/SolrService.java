@@ -54,7 +54,7 @@ public class SolrService {
     public SearchResponse getRecommendations(String key) {
         SolrQuery query = new SolrQuery();
         query.setFields("name", "mfid");
-        query.setQuery("name: \"" + key + "\"~5~2");
+        query.setQuery("name: \"" + key + "\"~5");
         query.setRows(10);
 
         try {
