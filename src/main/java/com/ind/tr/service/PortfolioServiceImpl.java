@@ -29,9 +29,8 @@ public class PortfolioServiceImpl implements PortfolioService {
     private ISTClock istClock;
 
     @Override
-    public PortfolioResponse createPortfolio(String userId) {
-        UUID userUuid = UUID.fromString(userId);
-        User user = userTranslator.fromUserReadEntity(userDao.getUser(userUuid));
+    public PortfolioResponse createPortfolio(UUID userId) {
+        User user = userTranslator.fromUserReadEntity(userDao.getUser(userId));
         Portfolio portfolio = generatePortfolioDetails(user);
         portfolioDao.savePortfolio(portfolioTranslator.toPortfolioEntity(portfolio));
         return portfolioTranslator.toPortfolioResponse(portfolio);

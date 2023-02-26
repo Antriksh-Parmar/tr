@@ -6,7 +6,6 @@ import com.ind.tr.service.SolrService;
 import com.ind.tr.service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +20,10 @@ public class SearchController {
     private SolrService solrService;
 
     @GetMapping("/search")
-    public ResponseEntity<SearchResponse> recommend(@RequestParam("q") String key, @AuthenticationPrincipal User user) {
+    public ResponseEntity<SearchResponse> recommend(
+            @RequestParam("q") String key,
+            @AuthenticationPrincipal User user
+    ) {
         if (key == null || key.isEmpty() || key.isBlank()) {
             return ResponseEntity.ok(new SearchResponse(Status.FAILURE, Collections.emptyList()));
         }

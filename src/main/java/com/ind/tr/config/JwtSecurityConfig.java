@@ -2,6 +2,7 @@ package com.ind.tr.config;
 
 import com.ind.tr.controller.auth.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,6 +24,9 @@ public class JwtSecurityConfig {
     @Autowired
     public UserDetailsService userDetailsService;
 
+    @Value("${auth.allowed-paths}")
+    private String allowedPaths;
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -37,7 +41,7 @@ public class JwtSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/register/**")
+                .requestMatchers(allowedPaths)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
