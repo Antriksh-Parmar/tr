@@ -3,6 +3,7 @@ package com.ind.tr.service;
 import com.ind.tr.controller.model.PortfolioResponse;
 import com.ind.tr.repository.PortfolioDao;
 import com.ind.tr.repository.UserDao;
+import com.ind.tr.repository.model.PortfolioEntity;
 import com.ind.tr.service.model.PlatformUser;
 import com.ind.tr.service.model.Portfolio;
 import com.ind.tr.service.model.User;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -28,12 +30,35 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Autowired
     private ISTClock istClock;
 
+    
+    // TODO Check roles and verify details
     @Override
-    public PortfolioResponse createPortfolio(UUID userId) {
-        User user = userTranslator.fromUserReadEntity(userDao.getUser(userId));
+    public PortfolioResponse createPortfolio(User user) {
         Portfolio portfolio = generatePortfolioDetails(user);
         portfolioDao.savePortfolio(portfolioTranslator.toPortfolioEntity(portfolio));
         return portfolioTranslator.toPortfolioResponse(portfolio);
+    }
+
+    @Override
+    public List<PortfolioResponse> getPortfolios(User user) {
+        List<PortfolioEntity> portfolioEntities = portfolioDao.getAllPortfolios(user.getId());
+        return portfolioEntities.stream().map(portfolioTranslator::toPortfolioResponse).toList();
+    }
+
+    @Override
+    public PortfolioResponse getPortfolio(UUID portfolioId) {
+        PortfolioEntity portfolioEntity = portfolioDao.getPortfolio(portfolioId);
+        return portfolioTranslator.toPortfolioResponse(portfolioEntity);
+    }
+
+    @Override
+    public void deletePortfolio(UUID portfolioId) {
+        portfolioDao.deletePortfolio(portfolioId);
+    }
+
+    @Override
+    public void deletePortfolios(User user) {
+        portfolioDao.deletePortfolios(user.getId());
     }
 
     private Portfolio generatePortfolioDetails(User user) {

@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("mutual_funds")
-public class MfSolrIndexReadDao {
+public class MfSolrIndexReadEntity {
 
     @Field("_id")
     ObjectId _id;
@@ -13,7 +13,7 @@ public class MfSolrIndexReadDao {
     @Field("fund_name")
     String name;
 
-    public MfSolrIndexReadDao(ObjectId _id, String name) {
+    public MfSolrIndexReadEntity(ObjectId _id, String name) {
         this._id = _id;
         this.name = name;
     }

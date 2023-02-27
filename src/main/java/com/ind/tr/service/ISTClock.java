@@ -16,6 +16,10 @@ public class ISTClock {
         return Clock.system(indiaZone);
     }
 
+    public java.sql.Date getTodaySqlDate() {
+        return java.sql.Date.valueOf(getTodayLocalDate());
+    }
+
     public Date getTodayDate() {
         return new Date(getClock().millis());
     }

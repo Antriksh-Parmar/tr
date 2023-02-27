@@ -4,11 +4,8 @@ import com.ind.tr.repository.model.UserReadEntity;
 import com.ind.tr.repository.model.UserWriteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,18 +35,14 @@ public class UserDaoImpl implements UserDao {
                 .setTableName("users")
                 .setParameters("*")
                 .setConditions("id = '" + uuid.toString() + "'").build();
-        return jdbcTemplate.queryForObject(query, new RowMapper<UserReadEntity>() {
-            @Override
-            public UserReadEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new UserReadEntity(
-                        UUID.fromString(rs.getString("id")),
-                        Optional.ofNullable(rs.getString("first_name")),
-                        Optional.ofNullable(rs.getString("last_name")),
-                        Optional.ofNullable(rs.getString("email")),
-                        Optional.ofNullable(rs.getString("pswd_hash"))
-                );
-            }
-        });
+
+        return jdbcTemplate.queryForObject(query, (rs, rowNum) -> new UserReadEntity(
+                UUID.fromString(rs.getString("id")),
+                Optional.ofNullable(rs.getString("first_name")),
+                Optional.ofNullable(rs.getString("last_name")),
+                Optional.ofNullable(rs.getString("email")),
+                Optional.ofNullable(rs.getString("pswd_hash"))
+        ));
     }
 }
 

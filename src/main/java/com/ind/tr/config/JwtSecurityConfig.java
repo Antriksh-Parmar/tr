@@ -41,7 +41,7 @@ public class JwtSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers(allowedPaths)
+                .requestMatchers(allowedPaths, "/refresh/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

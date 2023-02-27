@@ -5,6 +5,8 @@ import com.ind.tr.repository.model.PortfolioEntity;
 import com.ind.tr.service.model.Portfolio;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+
 @Component
 public class PortfolioTranslatorImpl implements PortfolioTranslator {
 
@@ -14,8 +16,8 @@ public class PortfolioTranslatorImpl implements PortfolioTranslator {
                 portfolio.getId(),
                 portfolio.getOwner(),
                 portfolio.getName(),
-                portfolio.getCreatedDate(),
-                portfolio.getUpdatedDate()
+                Date.valueOf(portfolio.getCreatedDate()),
+                Date.valueOf(portfolio.getUpdatedDate())
         );
     }
 
@@ -23,4 +25,10 @@ public class PortfolioTranslatorImpl implements PortfolioTranslator {
     public PortfolioResponse toPortfolioResponse(Portfolio portfolio) {
         return new PortfolioResponse(portfolio.getId(), portfolio.getName());
     }
+
+    @Override
+    public PortfolioResponse toPortfolioResponse(PortfolioEntity portfolioEntity) {
+        return new PortfolioResponse(portfolioEntity.getId(), portfolioEntity.getName());
+    }
+
 }

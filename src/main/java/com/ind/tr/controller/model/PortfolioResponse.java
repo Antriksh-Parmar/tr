@@ -1,5 +1,7 @@
 package com.ind.tr.controller.model;
 
+import com.ind.tr.controller.model.search.Status;
+
 import java.util.UUID;
 
 public class PortfolioResponse {
@@ -15,15 +17,8 @@ public class PortfolioResponse {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

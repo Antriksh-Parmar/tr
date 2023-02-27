@@ -1,16 +1,16 @@
 package com.ind.tr.repository.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.UUID;
 
 public class PortfolioEntity {
     private UUID id;
     private UUID ownerId;
     private String name;
-    private LocalDate createdDate;
-    private LocalDate updatedDate;
+    private Date createdDate;
+    private Date updatedDate;
 
-    public PortfolioEntity(UUID id, UUID ownerId, String name, LocalDate createdDate, LocalDate updatedDate) {
+    public PortfolioEntity(UUID id, UUID ownerId, String name, Date createdDate, Date updatedDate) {
         this.id = id;
         this.ownerId = ownerId;
         this.name = name;
@@ -30,11 +30,11 @@ public class PortfolioEntity {
         return name;
     }
 
-    public LocalDate getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public LocalDate getUpdatedDate() {
+    public Date getUpdatedDate() {
         return updatedDate;
     }
 }

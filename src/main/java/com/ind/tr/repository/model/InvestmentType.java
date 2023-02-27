@@ -1,4 +1,4 @@
-package com.ind.tr.controller.model;
+package com.ind.tr.repository.model;
 
 public enum InvestmentType {
     SIP, LUMP_SUM

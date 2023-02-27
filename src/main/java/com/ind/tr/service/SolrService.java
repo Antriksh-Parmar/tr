@@ -4,7 +4,7 @@ import com.ind.tr.controller.model.search.MutualFund;
 import com.ind.tr.controller.model.search.SearchResponse;
 import com.ind.tr.controller.model.search.Status;
 import com.ind.tr.repository.SolrServiceDao;
-import com.ind.tr.repository.model.MfSolrIndexReadDao;
+import com.ind.tr.repository.model.MfSolrIndexReadEntity;
 import com.ind.tr.service.model.MfSolrSearchIndexDocument;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -71,8 +71,8 @@ public class SolrService {
         }
     }
 
-    private MfSolrSearchIndexDocument buildSolrDocument(MfSolrIndexReadDao mfSolrIndexReadDao) {
-        return new MfSolrSearchIndexDocument(mfSolrIndexReadDao.get_id().toString(), mfSolrIndexReadDao.getName());
+    private MfSolrSearchIndexDocument buildSolrDocument(MfSolrIndexReadEntity mfSolrIndexReadEntity) {
+        return new MfSolrSearchIndexDocument(mfSolrIndexReadEntity.get_id().toString(), mfSolrIndexReadEntity.getName());
     }
 
     private SearchResponse buildResponse(List<MfSolrSearchIndexDocument> mfSolrIndexReadDaos) {
