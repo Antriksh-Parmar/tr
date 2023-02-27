@@ -4,13 +4,14 @@ import com.ind.tr.controller.model.MutualFundInvestmentRequest;
 import com.ind.tr.controller.model.MutualFundInvestmentResponse;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MutualFundService {
 
-    void addMutualFund(MutualFundInvestmentRequest request, UUID portfolioId);
+    MutualFundInvestmentResponse addMutualFund(MutualFundInvestmentRequest request, UUID portfolioId);
 
-    MutualFundInvestmentResponse getMutualFund(UUID mfId);
+    Optional<MutualFundInvestmentResponse> getMutualFund(UUID mfId);
 
     List<MutualFundInvestmentResponse> getAllMutualFuds(UUID portfolioId);
 

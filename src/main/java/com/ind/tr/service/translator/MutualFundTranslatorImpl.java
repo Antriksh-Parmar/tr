@@ -27,22 +27,25 @@ public class MutualFundTranslatorImpl implements MutualFundTranslator {
             MutualFundInvestmentRequest request,
             UUID portfolioId) {
         return new MutualFundInvestment(
+                UUID.randomUUID(),
                 request.getMutualFundId(),
                 portfolioId,
                 InvestmentSource.DIRECT,
                 fromRequestInvestmentType(request.getInvestmentType()),
-                request.getSipInterval().map(this::fromRequestSipInterval),
-                request.getSipStartDate(),
-                request.getSipAmount(),
-                request.getLumpSumInvestmentDate(),
-                request.getLumpSumInvestmentAmount()
+                Optional.ofNullable(request.getSipInterval()).map(this::fromRequestSipInterval),
+                Optional.ofNullable(request.getSipStartDate()),
+                Optional.ofNullable(request.getSipAmount()),
+                Optional.ofNullable(request.getLumpSumInvestmentDate()),
+                Optional.ofNullable(request.getLumpSumInvestmentAmount())
         );
     }
 
     @Override
     public MutualFundInvestmentResponse toMutualFundInvestmentResponse(MutualFundInvestment mutualFundInvestment) {
         return new MutualFundInvestmentResponse(
+                mutualFundInvestment.getId(),
                 mutualFundInvestment.getMutualFundId(),
+                mutualFundInvestment.getPortfolioId(),
                 toResponseInvestmentType(mutualFundInvestment.getInvestmentType()),
                 mutualFundInvestment.getSipInterval().map(this::toResponseSipInterval),
                 mutualFundInvestment.getSipStartedDate(),
@@ -55,7 +58,7 @@ public class MutualFundTranslatorImpl implements MutualFundTranslator {
     @Override
     public MutualFundInvestmentEntity toMutualFundInvestmentEntity(MutualFundInvestment mutualFundInvestment) {
         return new MutualFundInvestmentEntity(
-                UUID.randomUUID(),
+                mutualFundInvestment.getId(),
                 mutualFundInvestment.getMutualFundId(),
                 mutualFundInvestment.getPortfolioId(),
                 toEntitySource(mutualFundInvestment.getSource()),
@@ -74,6 +77,7 @@ public class MutualFundTranslatorImpl implements MutualFundTranslator {
     @Override
     public MutualFundInvestment fromMutualFundInvestmentEntity(MutualFundInvestmentEntity entity) {
         return new MutualFundInvestment(
+                entity.getId(),
                 entity.getMutualFundId(),
                 entity.getPortfolioId(),
                 fromEntitySource(entity.getSource()),

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -46,9 +47,9 @@ public class PortfolioServiceImpl implements PortfolioService {
     }
 
     @Override
-    public PortfolioResponse getPortfolio(UUID portfolioId) {
-        PortfolioEntity portfolioEntity = portfolioDao.getPortfolio(portfolioId);
-        return portfolioTranslator.toPortfolioResponse(portfolioEntity);
+    public Optional<PortfolioResponse> getPortfolio(UUID portfolioId) {
+        Optional<PortfolioEntity> portfolioEntity = portfolioDao.getPortfolio(portfolioId);
+        return portfolioEntity.map(portfolioTranslator::toPortfolioResponse);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 
     private String createPortfolioName(User user) {
         if (user instanceof PlatformUser platformUser) {
-            return platformUser.getFirstName() + "'s portfolio: " + istClock.getTodayLocalDate().toString();
+            return platformUser.getFirstName() + "portfolio: " + istClock.getTodayLocalDate().toString();
         } else {
             return "My portfolio: " + istClock.getTodayLocalDate().toString();
         }

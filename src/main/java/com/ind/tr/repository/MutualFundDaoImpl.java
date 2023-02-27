@@ -9,15 +9,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class MutualFundDaoImpl implements MutualFundDao {
-
-    private final QueryBuilder mfQueryBuilder = QueryBuilder.builder().setSchema("pf").setTableName("mutual_funds_investments");
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -26,28 +26,25 @@ public class MutualFundDaoImpl implements MutualFundDao {
     private MutualFundRowMapper mutualFundRowMapper;
 
     @Override
-    public MutualFundInvestmentEntity getMutualFund(UUID mfId) {
-        String query = mfQueryBuilder.setConditions("id = '" + mfId.toString() + "'").build();
+    public Optional<MutualFundInvestmentEntity> getMutualFund(UUID mfId) {
+        String query = String.format("SELECT * FROM pf.mutual_funds_investments where id='%s'", mfId.toString());
         List<MutualFundInvestmentEntity> mutualFundEntities = jdbcTemplate.query(query, mutualFundRowMapper);
         if (mutualFundEntities.size() > 0) {
-            return mutualFundEntities.get(0);
+            return Optional.of(mutualFundEntities.get(0));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
     @Override
     public List<MutualFundInvestmentEntity> getMutualFunds(UUID portfolioId) {
-        String query = mfQueryBuilder
-                .setQueryType(QueryType.SELECT)
-                .setConditions("portfolioId = '" + portfolioId.toString() + "'")
-                .build();
+        String query = String.format("SELECT * FROM pf.mutual_funds_investments where portfolio_id='%s'", portfolioId.toString());
         return jdbcTemplate.query(query, mutualFundRowMapper);
     }
 
     @Override
-    public void deleteMutualFund(UUID mfId) {
-        String query = "DELETE FROM pf.mutual_funds_investments WHERE id='" + mfId.toString() + "'";
+    public void deleteMutualFund(UUID id) {
+        String query = "DELETE FROM pf.mutual_funds_investments WHERE id='" + id.toString() + "'";
         jdbcTemplate.execute(query);
     }
 
@@ -59,19 +56,22 @@ public class MutualFundDaoImpl implements MutualFundDao {
 
     @Override
     public void addMutualFund(MutualFundInvestmentEntity mf) {
-        String query = mfQueryBuilder
-                .setQueryType(QueryType.INSERT)
-                .setParameters(
-                        "id", "portfolio_id", "source", "investment_type", "sip_interval",
-                        "sip_start_date", "sip_amount", "lump_sum_investment_date", "lump_sum_amount",
-                        "created_date", "updated_date")
-                .setValues(
-                        mf.getId().toString(), mf.getPortfolioId().toString(),
-                        mf.getSource().toString(), mf.getInvestmentType().toString(), mf.getSipInterval().toString(),
-                        mf.getSipStartDate(), mf.getSipAmount(), mf.getLumpSumInvestmentDate(),
-                        mf.getLumpSumInvestmentAmount(), mf.getCreatedDate(), mf.getUpdatedDate())
-                .build();
-        jdbcTemplate.execute(query);
+        jdbcTemplate.update(con -> {
+            PreparedStatement preparedStatement = con.prepareStatement("INSERT INTO pf.mutual_funds_investments (id, mutual_fund_id, portfolio_id, source, investment_type, sip_interval, sip_start_date, sip_amount, lump_sum_investment_date, lump_sum_amount, created_date, updated_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            preparedStatement.setString(1, mf.getId().toString());
+            preparedStatement.setString(2, mf.getMutualFundId().toString());
+            preparedStatement.setString(3, mf.getPortfolioId().toString());
+            preparedStatement.setString(4, mf.getSource().toString());
+            preparedStatement.setString(5, mf.getInvestmentType().toString());
+            preparedStatement.setString(6, mf.getSipInterval().toString());
+            preparedStatement.setDate(7, mf.getSipStartDate());
+            preparedStatement.setBigDecimal(8, mf.getSipAmount());
+            preparedStatement.setDate(9, mf.getLumpSumInvestmentDate());
+            preparedStatement.setBigDecimal(10, mf.getLumpSumInvestmentAmount());
+            preparedStatement.setDate(11, mf.getCreatedDate());
+            preparedStatement.setDate(12, mf.getUpdatedDate());
+            return preparedStatement;
+        });
     }
 }
 

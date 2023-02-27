@@ -4,6 +4,7 @@ import com.ind.tr.controller.model.PortfolioResponse;
 import com.ind.tr.service.model.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PortfolioService {
@@ -11,7 +12,7 @@ public interface PortfolioService {
 
     List<PortfolioResponse> getPortfolios(User user);
 
-    PortfolioResponse getPortfolio(UUID portfolioId);
+    Optional<PortfolioResponse> getPortfolio(UUID portfolioId);
 
     void deletePortfolio(UUID portfolioId);
 

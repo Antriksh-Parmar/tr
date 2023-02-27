@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class MutualFundInvestment {
+    private UUID id;
     private UUID mutualFundId;
     private UUID portfolioId;
     private InvestmentSource source;
@@ -16,7 +17,8 @@ public class MutualFundInvestment {
     private Optional<LocalDate> lumpSumInvestmentDate;
     private Optional<BigDecimal> lumpSumInvestmentAmount;
 
-    public MutualFundInvestment(UUID mutualFundId, UUID portfolioId, InvestmentSource source, InvestmentType investmentType, Optional<SipInterval> sipInterval, Optional<LocalDate> sipStartedDate, Optional<BigDecimal> sipAmount, Optional<LocalDate> lumpSumInvestmentDate, Optional<BigDecimal> lumpSumInvestmentAmount) {
+    public MutualFundInvestment(UUID id, UUID mutualFundId, UUID portfolioId, InvestmentSource source, InvestmentType investmentType, Optional<SipInterval> sipInterval, Optional<LocalDate> sipStartedDate, Optional<BigDecimal> sipAmount, Optional<LocalDate> lumpSumInvestmentDate, Optional<BigDecimal> lumpSumInvestmentAmount) {
+        this.id = id;
         this.mutualFundId = mutualFundId;
         this.portfolioId = portfolioId;
         this.source = source;
@@ -26,6 +28,10 @@ public class MutualFundInvestment {
         this.sipAmount = sipAmount;
         this.lumpSumInvestmentDate = lumpSumInvestmentDate;
         this.lumpSumInvestmentAmount = lumpSumInvestmentAmount;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public UUID getMutualFundId() {

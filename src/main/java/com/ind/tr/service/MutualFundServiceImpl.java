@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -22,17 +23,18 @@ public class MutualFundServiceImpl implements MutualFundService {
     private MutualFundTranslator mutualFundTranslator;
 
     @Override
-    public void addMutualFund(MutualFundInvestmentRequest request, UUID portfolioId) {
+    public MutualFundInvestmentResponse addMutualFund(MutualFundInvestmentRequest request, UUID portfolioId) {
         //TODO verify portfolioId
         MutualFundInvestment mutualFundInvestment = mutualFundTranslator.fromMutualFundInvestmentRequest(request, portfolioId);
         MutualFundInvestmentEntity mutualFundInvestmentEntity = mutualFundTranslator.toMutualFundInvestmentEntity(mutualFundInvestment);
         mutualFundDao.addMutualFund(mutualFundInvestmentEntity);
+        return mutualFundTranslator.toMutualFundInvestmentResponse(mutualFundInvestment);
     }
 
     @Override
-    public MutualFundInvestmentResponse getMutualFund(UUID mfId) {
-        MutualFundInvestment mutualFundInvestment = mutualFundTranslator.fromMutualFundInvestmentEntity(mutualFundDao.getMutualFund(mfId));
-        return mutualFundTranslator.toMutualFundInvestmentResponse(mutualFundInvestment);
+    public Optional<MutualFundInvestmentResponse> getMutualFund(UUID mfId) {
+        Optional<MutualFundInvestment> mutualFundInvestment = mutualFundDao.getMutualFund(mfId).map(mutualFundTranslator::fromMutualFundInvestmentEntity);
+        return mutualFundInvestment.map(mutualFundTranslator::toMutualFundInvestmentResponse);
     }
 
     @Override
@@ -43,8 +45,8 @@ public class MutualFundServiceImpl implements MutualFundService {
     }
 
     @Override
-    public void removeMutualFund(UUID mfId) {
-        mutualFundDao.deleteMutualFund(mfId);
+    public void removeMutualFund(UUID id) {
+        mutualFundDao.deleteMutualFund(id);
     }
 
     @Override

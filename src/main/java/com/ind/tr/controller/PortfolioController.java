@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -25,9 +26,9 @@ public class PortfolioController {
     }
 
     @GetMapping("/{portfolioId}")
-    public ResponseEntity<PortfolioResponse> getPortfolio(@AuthenticationPrincipal User user, @RequestParam("portfolioId") UUID portfolioId) {
-        PortfolioResponse response = portfolioService.getPortfolio(portfolioId);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<PortfolioResponse> getPortfolio(@AuthenticationPrincipal User user, @PathVariable("portfolioId") UUID portfolioId) {
+        Optional<PortfolioResponse> response = portfolioService.getPortfolio(portfolioId);
+        return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/")
@@ -37,7 +38,7 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/{portfolioId}")
-    public ResponseEntity deletePortfolio(@AuthenticationPrincipal User user, @RequestParam("portfolioId") UUID portfolioId) {
+    public ResponseEntity deletePortfolio(@AuthenticationPrincipal User user, @PathVariable("portfolioId") UUID portfolioId) {
         portfolioService.deletePortfolio(portfolioId);
         return ResponseEntity.ok().build();
     }

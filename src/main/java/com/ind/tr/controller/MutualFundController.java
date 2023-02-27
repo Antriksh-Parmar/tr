@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,17 +21,18 @@ public class MutualFundController {
     private MutualFundService mutualFundService;
 
     @PostMapping("/")
-    public void addMutualFund(
+    public ResponseEntity<MutualFundInvestmentResponse> addMutualFund(
             @PathVariable UUID portfolioId,
             @RequestBody MutualFundInvestmentRequest mutualFundInvestmentRequest,
             @AuthenticationPrincipal User user) {
-        mutualFundService.addMutualFund(mutualFundInvestmentRequest, portfolioId);
+        MutualFundInvestmentResponse mutualFundInvestmentResponse = mutualFundService.addMutualFund(mutualFundInvestmentRequest, portfolioId);
+        return ResponseEntity.ok(mutualFundInvestmentResponse);
     }
 
-    @GetMapping("/{mutualFundId}")
-    public ResponseEntity<MutualFundInvestmentResponse> getMutualFund(@RequestParam("mutualFundId") UUID mutualFundId) {
-         MutualFundInvestmentResponse response = mutualFundService.getMutualFund(mutualFundId);
-         return ResponseEntity.ok(response);
+    @GetMapping("/{id}")
+    public ResponseEntity<MutualFundInvestmentResponse> getMutualFund(@PathVariable("id") UUID mutualFundId) {
+         Optional<MutualFundInvestmentResponse> response = mutualFundService.getMutualFund(mutualFundId);
+         return response.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/")
@@ -39,9 +41,9 @@ public class MutualFundController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{mutualFundId}")
-    public void removeMutualFund(@RequestParam("mutualFundId") UUID mutualFundId) {
-        mutualFundService.removeMutualFund(mutualFundId);
+    @DeleteMapping("/{id}")
+    public void removeMutualFund(@PathVariable("id") UUID id) {
+        mutualFundService.removeMutualFund(id);
     }
 
     @DeleteMapping("/")
