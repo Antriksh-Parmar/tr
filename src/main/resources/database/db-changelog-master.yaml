@@ -6,3 +6,6 @@ databaseChangeLog:
         - sqlFile:
             path: "001-db-setup.sql"
             relativeToChangelogFile: true
+        - sqlFile:
+            path: "002-db-setup.sql"
+            relativeToChangelogFile: true
