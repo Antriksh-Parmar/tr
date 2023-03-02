@@ -16,7 +16,7 @@ CREATE TABLE fi.mutual_funds(
     portfolio_turnover NUMERIC(6,3),
     fund_active BOOLEAN,
     fund_name VARCHAR(300),
-    isin VARCHAR(200) UNIQUE,
+    isin VARCHAR(200),
     short_name VARCHAR(300),
     fund_manager VARCHAR(500),
     inception_date DATE,
@@ -37,33 +37,37 @@ CREATE TABLE fi.mutual_funds(
     swp_order_allowed BOOLEAN,
     stp_order_allowed BOOLEAN,
     direct BOOLEAN,
-    maturity_type BOOLEAN
+    maturity_type VARCHAR(100)
 );
 
 CREATE TABLE  fi.key_mappings (
     id SERIAL PRIMARY KEY,
-    isin VARCHAR(100) NOT NULL REFERENCES fi.mutual_funds(isin),
+    mf_id VARCHAR(200) REFERENCES fi.mutual_funds(id),
+    isin VARCHAR(100),
     ms_id VARCHAR(100),
     kv_id VARCHAR(100)
 );
 
 CREATE TABLE fi.mutual_fund_navs (
     id BIGSERIAL PRIMARY KEY,
-    isin VARCHAR(100) REFERENCES fi.mutual_funds(isin),
+    mf_id VARCHAR(200) REFERENCES fi.mutual_funds(id),
+    isin VARCHAR(100),
     nav NUMERIC(10, 3) NOT NULL,
     nav_date DATE
 );
 
 CREATE TABLE fi.mutual_fund_exit_loads (
     id BIGSERIAL PRIMARY KEY,
-    isin VARCHAR(100) REFERENCES fi.mutual_funds(isin),
+    mf_id VARCHAR(200) REFERENCES fi.mutual_funds(id),
+    isin VARCHAR(100),
     till_days INT,
     exit_load NUMERIC(5, 3)
 );
 
 CREATE TABLE fi.mutual_fund_holdings (
     id BIGSERIAL PRIMARY KEY,
-    mf_isin VARCHAR(100) REFERENCES fi.mutual_funds(isin),
+    mf_id VARCHAR(200) REFERENCES fi.mutual_funds(id),
+    mf_isin VARCHAR(100),
     name VARCHAR(200),
     holding_type VARCHAR(100),
     weight NUMERIC(10,3),

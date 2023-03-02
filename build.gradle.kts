@@ -13,6 +13,9 @@ repositories {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp:okhttp:2.7.5")
+
+
     implementation("org.springframework.boot:spring-boot-starter-security:3.0.3")
     implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
     implementation("com.nimbusds:nimbus-jose-jwt:9.31")
