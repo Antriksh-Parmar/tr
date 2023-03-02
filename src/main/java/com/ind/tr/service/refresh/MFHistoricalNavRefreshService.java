@@ -30,8 +30,8 @@ public class MFHistoricalNavRefreshService {
     private final String toDate = format.format(new Date());
     private final Map<Integer, List<NavResponse>> responses = new HashMap<>();
 
-    //TODO Make this auto wired
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private RefreshMfDataDao refreshDao;

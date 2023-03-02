@@ -30,8 +30,8 @@ public class SbDataScanService {
     private final Map<String, Object> requestBody = new HashMap<>();
     private final HttpHeaders headers = new HttpHeaders();
 
-    // TODO Inject this using spring
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private MongoTemplate mongoTemplate;
