@@ -2,7 +2,7 @@ SET search_path TO fi;
 
 ALTER TABLE fi.mutual_funds ALTER COLUMN maturity_type VARCHAR(100);
 
-CREATE TABLE fi.mutual_funds_asset_classes (
+CREATE TABLE fi.mutual_fund_asset_classes (
     id SERIAL PRIMARY KEY,
     mf_id VARCHAR(300) REFERENCES fi.mutual_funds(id),
     isin VARCHAR(300),
