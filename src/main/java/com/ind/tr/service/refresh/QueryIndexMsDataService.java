@@ -7,13 +7,10 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.function.Function;
 
@@ -39,7 +36,7 @@ public class QueryIndexMsDataService {
         List<MsKeys> keys = queryEligibleMsIds();
         String updateQuery = "UPDATE fi.mutual_funds SET index = ?, index_new = ?, benchmark = ?, portfolio_turnover = ? WHERE id = ?";
         for (MsKeys key : keys) {
-            ObjectNode node = queryIndexes(key.msId);
+            ObjectNode node = queryIndexes(key.getMsId());
 
             jdbcTemplate.update(con -> {
                 PreparedStatement ps = con.prepareStatement(updateQuery);
@@ -47,7 +44,7 @@ public class QueryIndexMsDataService {
                 ps.setString(2, getStringValue(node.get("primaryIndexNameNew")));
                 ps.setString(3, getStringValue(node.get("prospectusBenchmarkName")));
                 ps.setBigDecimal(4, getBigDecimal(node.get("lastTurnoverRatio")));
-                ps.setString(5, key.uuid);
+                ps.setString(5, key.getUuid());
                 return ps;
             });
 
@@ -63,7 +60,6 @@ public class QueryIndexMsDataService {
         String query = "SELECT ms_id, mf_id from fi.key_mappings WHERE kv_id IS NOT NULL";
         return jdbcTemplate.query(query, (rs, rowNum) -> new MsKeys(rs.getString("ms_id"), rs.getString("mf_id")));
     }
-
 
     private ObjectNode queryIndexes(String msId) {
         OkHttpClient client = new OkHttpClient();
@@ -110,7 +106,6 @@ public class QueryIndexMsDataService {
             return converter.apply(node);
         }
     }
-
     class MsKeys {
         private final String msId;
         private final String uuid;

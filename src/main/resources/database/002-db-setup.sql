@@ -37,7 +37,7 @@ CREATE TABLE fi.mutual_funds(
     swp_order_allowed BOOLEAN,
     stp_order_allowed BOOLEAN,
     direct BOOLEAN,
-    maturity_type VARCHAR(100)
+    maturity_type BOOLEAN
 );
 
 CREATE TABLE  fi.key_mappings (

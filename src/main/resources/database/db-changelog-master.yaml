@@ -9,3 +9,6 @@ databaseChangeLog:
         - sqlFile:
             path: "002-db-setup.sql"
             relativeToChangelogFile: true
+        - sqlFile:
+            path: "003-add-asset-class-table.sql"
+            relativeToChangelogFile: true
