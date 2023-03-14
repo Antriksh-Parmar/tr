@@ -59,6 +59,55 @@ CREATE TABLE fi.mutual_fund_risk_parameters (
 
 CREATE TABLE fi.indexes (
     id SERIAL PRIMARY KEY,
-    index_key INT,
+    index_key INT UNIQUE,
     name VARCHAR(400)
+);
+
+CREATE TABLE fi.mutual_fund_rolling_returns (
+    id SERIAL PRIMARY KEY,
+    mf_id VARCHAR(300) REFERENCES fi.mutual_funds(id),
+    rr_date DATE,
+    one_month NUMERIC(50, 40),
+    three_month NUMERIC(50, 40),
+    six_month NUMERIC(50, 40),
+    one_year NUMERIC(50, 40),
+    three_years NUMERIC(50, 40),
+    five_years NUMERIC(50, 40),
+    seven_years NUMERIC(50, 40),
+    ten_years NUMERIC(50, 40)
+);
+
+CREATE TABLE fi.index_rolling_returns (
+    id BIGSERIAL PRIMARY KEY,
+    index_id INT REFERENCES fi.indexes(index_key),
+    rr_date DATE,
+    one_month NUMERIC(50, 40),
+    three_month NUMERIC(50, 40),
+    six_month NUMERIC(50, 40),
+    one_year NUMERIC(50, 40),
+    three_years NUMERIC(50, 40),
+    five_years NUMERIC(50, 40),
+    seven_years NUMERIC(50, 40),
+    ten_years NUMERIC(50, 40)
+);
+
+CREATE TABLE fi.index_map (
+    id SERIAL PRIMARY KEY,
+    ms_name VARCHAR(500),
+    rv_code INT,
+    rv_name VARCHAR(500)
+);
+
+CREATE TABLE fi.mutual_funds_rolling_returns (
+    id BIGSERIAL PRIMARY KEY,
+    mf_id VARCHAR(300) REFERENCES fi.mutual_funds(id),
+    rr_date DATE,
+    one_month NUMERIC(50, 40),
+    three_month NUMERIC(50, 40),
+    six_month NUMERIC(50, 40),
+    one_year NUMERIC(50, 40),
+    three_years NUMERIC(50, 40),
+    five_years NUMERIC(50, 40),
+    seven_years NUMERIC(50, 40),
+    ten_years NUMERIC(50, 40)
 );

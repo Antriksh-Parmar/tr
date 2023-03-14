@@ -69,6 +69,8 @@ public class DBConfig {
         SpringLiquibase springLiquibase = new SpringLiquibase();
         springLiquibase.setDataSource(dataSource);
         springLiquibase.setChangeLog(liquibaseChangeLog);
+        //TODO remove the following flag when not testing
+        springLiquibase.setShouldRun(false);
         return springLiquibase;
     }
 
