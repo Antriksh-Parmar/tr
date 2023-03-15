@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class MutualFundsNavDaoImpl implements MutualFundsNavDao {
 
 
     @Override
-    public List<MutualFundNavEntity> queryAllMutualFundsNavs() {
+    public List<MutualFundNavEntity> queryMutualFundsNavs() {
         String query = "SELECT * FROM fi.mutual_fund_navs";
         long start = System.currentTimeMillis();
         List<MutualFundNavEntity> result = jdbcTemplate.query(query, rowMapper);
@@ -38,10 +38,13 @@ public class MutualFundsNavDaoImpl implements MutualFundsNavDao {
 
     @Override
     public List<MutualFundNavEntity> queryMutualFundsNavs(List<String> fundIds) {
-        String query = "SELECT * FROM mutual_fund_navs WHERE mf_id IN (:ids)";
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("ids", fundIds);
-        return jdbcTemplate.query(query, rowMapper, params);
+        String query = "SELECT * FROM fi.mutual_fund_navs WHERE mf_id IN (";
+        List<String> placeholders = new ArrayList<>();
+        for (int i = 0; i < fundIds.size(); i++) {
+            placeholders.add("?");
+        }
+        query += String.join(",", placeholders) + ")";
+        return jdbcTemplate.query(query, rowMapper, fundIds.toArray());
     }
 }
 

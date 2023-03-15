@@ -38,7 +38,9 @@ public class MutualFundRollingReturnsServiceImpl implements MutualFundRollingRet
 
     @Override
     public void refreshMutualFundsRollingReturns() {
-        refresh(mutualFundsNavDao.queryAllMutualFundsNavs());
+        long start = System.currentTimeMillis();
+        refresh(mutualFundsNavDao.queryMutualFundsNavs());
+        logger.debug("Meter - refresh - ms: " + (System.currentTimeMillis() - start));
     }
 
     @Override
@@ -104,8 +106,7 @@ public class MutualFundRollingReturnsServiceImpl implements MutualFundRollingRet
             BigDecimal returnVal = null;
             if (start != null && start.intValue() != 0) {
                 returnVal = switch (period) {
-                    case MONTH, THREE_MONTHS, SIX_MONTHS -> calculateAbsoluteReturn(start, end);
-                    case ONE_YEAR -> calculateCAGR(start, end, 1);
+                    case MONTH, THREE_MONTHS, SIX_MONTHS, ONE_YEAR -> calculateAbsoluteReturn(start, end);
                     case THREE_YEARS -> calculateCAGR(start, end, 3);
                     case FIVE_YEARS -> calculateCAGR(start, end, 5);
                     case SEVEN_YEARS -> calculateCAGR(start, end, 7);
@@ -117,6 +118,16 @@ public class MutualFundRollingReturnsServiceImpl implements MutualFundRollingRet
         return result;
     }
 
+    /**
+     * Identifies date for the initial value.
+     * If the date falls on Sunday/Saturday, we pick the friday that immediately precedes.
+     * Returns NAV on that date.
+     *
+     * @param period
+     * @param current
+     * @param navMap
+     * @return
+     */
     private BigDecimal getStartNavForPeriod(Period period, LocalDate current, TreeMap<LocalDate, BigDecimal> navMap) {
         LocalDate date = switch (period) {
             case MONTH -> current.minusMonths(1);
@@ -139,7 +150,10 @@ public class MutualFundRollingReturnsServiceImpl implements MutualFundRollingRet
     }
 
     private BigDecimal calculateCAGR(BigDecimal startValue, BigDecimal endValue, int years) {
-        return ((endValue.divide(startValue, 5, RoundingMode.HALF_UP)).pow(1 / years)).subtract(BigDecimal.ONE);
+        BigDecimal growth = endValue.divide(startValue, 5, RoundingMode.HALF_UP);
+        BigDecimal cagr = BigDecimal.valueOf(Math.pow(growth.doubleValue(), 1.0 / years));
+        cagr = cagr.subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100));
+        return cagr.setScale(5, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculateAbsoluteReturn(BigDecimal startValue, BigDecimal endValue) {
